@@ -1,0 +1,16 @@
+{
+"name":"Fire Fighter Flow",
+"short_name":"FFF",
+"start_url":"./",
+"display":"standalone",
+"background_color":"#0B1F33",
+"theme_color":"#0B1F33",
+"orientation":"portrait",
+"icons":[
+{
+"src":"icon.png",
+"sizes":"512x512",
+"type":"image/png"
+}
+]
+}
