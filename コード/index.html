@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<link rel="manifest"
+href="manifest.json">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+機関員計算補助ソフト
+</title>
+
+<link rel="stylesheet"
+href="style.css?v=2">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="apple-touch-icon"
+href="icon.png">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="titleArea">
+
+<h1>
+🚒 機関員計算補助ソフト
+</h1>
+
+<div class="version">
+Ver5 Stable
+</div>
+
+</div>
+
+<div class="modeSwitch">
+
+<button id="genbaBtn"
+class="active">
+
+現場モード
+
+</button>
+
+<button id="studyBtn"
+class="normal">
+
+学習モード
+
+</button>
+
+</div>
+
+</header>
+
+<main>
+
+<!-- メニュー -->
+
+<div id="menuPage">
+
+<div class="menuCard"
+data-page="hosePage"
+data-order="lossPage">
+
+ホース摩擦損失計算
+
+</div>
+
+<div class="menuCard"
+data-page="reactionPage"
+data-order="reactionPage">
+
+放水反動力計算
+
+</div>
+
+<div class="menuCard"
+data-page="flowPage"
+data-order="flowPage">
+
+放水量計算
+
+</div>
+
+<div class="menuCard"
+data-page="suctionPage"
+data-order="suctionPage">
+
+吸水高さによる吸水量計算
+
+</div>
+
+<div class="menuCard"
+data-page="hydrantPage"
+data-order="hydrantPage">
+
+消火栓能力計算
+
+</div>
+
+<div class="menuCard"
+data-page="guidePage">
+
+📘 使い方・説明
+
+</div>
+
+</div>
+
+<!-- 摩擦損失 -->
+
+<section id="hosePage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+ホース摩擦損失計算
+
+</h2>
+
+<div class="card">
+
+<h3>
+65mmホース
+</h3>
+
+<div class="formula studyOnly">
+
+L = 0.137 × N × Q²<br><br>
+
+L ：摩擦損失（MPa）<br>
+N ：ホース本数<br>
+Q ：放水量（㎥/min）
+
+</div>
+
+<label>
+ホース本数
+</label>
+
+<input type="number"
+id="hose65Count">
+
+<label>
+放水量（㎥/min）
+</label>
+
+<input type="number"
+step="0.01"
+id="hose65Flow">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+摩擦損失
+</div>
+
+<div class="resultValue"
+id="hose65Result">
+
+0.000 MPa
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+50mmホース
+</h3>
+
+<div class="formula studyOnly">
+
+L = 0.365 × N × Q²<br><br>
+
+L ：摩擦損失（MPa）<br>
+N ：ホース本数<br>
+Q ：放水量（㎥/min）
+
+</div>
+
+<label>
+ホース本数
+</label>
+
+<input type="number"
+id="hose50Count">
+
+<label>
+放水量（㎥/min）
+</label>
+
+<input type="number"
+step="0.01"
+id="hose50Flow">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+摩擦損失
+</div>
+
+<div class="resultValue"
+id="hose50Result">
+
+0.000 MPa
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+40mmホース
+</h3>
+
+<div class="formula studyOnly">
+
+L = 1.569 × N × Q²<br><br>
+
+L ：摩擦損失（MPa）<br>
+N ：ホース本数<br>
+Q ：放水量（㎥/min）
+
+</div>
+
+<label>
+ホース本数
+</label>
+
+<input type="number"
+id="hose40Count">
+
+<label>
+放水量（㎥/min）
+</label>
+
+<input type="number"
+step="0.01"
+id="hose40Flow">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+摩擦損失
+</div>
+
+<div class="resultValue"
+id="hose40Result">
+
+0.000 MPa
+
+</div>
+
+</div>
+
+</div>
+
+<div class="totalBox">
+
+<div class="totalTitle">
+合計摩擦損失
+</div>
+
+<div class="totalValue"
+id="totalLoss">
+
+0.000 MPa
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 放水反動力 -->
+
+<section id="reactionPage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+放水反動力計算
+
+</h2>
+
+<div class="card">
+
+<label>
+
+ノズル種類
+
+</label>
+
+<select id="reactionType">
+
+<option value="quadra">
+クアドラフォグノズル
+</option>
+
+<option value="pipe">
+管鎗
+</option>
+
+</select>
+
+<div class="formula studyOnly">
+
+N = 150 × D² × P<br><br>
+
+N ：放水反動力（N）<br>
+D ：ノズル口径（cm）<br>
+P ：ノズル圧力（MPa）
+
+</div>
+
+<div id="reactionQuadra">
+
+<label>
+
+ノズルレンジ
+
+</label>
+
+<select id="reactionQuadraSelect">
+
+<option value="0.8">
+110レンジ（0.8cm）
+</option>
+
+<option value="1.15">
+230レンジ（1.15cm）
+</option>
+
+<option value="1.44">
+360レンジ（1.44cm）
+</option>
+
+<option value="1.65">
+470レンジ（1.65cm）
+</option>
+
+</select>
+
+</div>
+
+<div id="reactionPipe"
+class="hidden">
+
+<label>
+
+ノズル口径(cm)
+
+</label>
+
+<input type="number"
+step="0.01"
+id="reactionPipeDiameter">
+
+</div>
+
+<label>
+
+ノズル圧力(MPa)
+
+</label>
+
+<input type="number"
+step="0.01"
+id="reactionPressure">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+放水反動力
+</div>
+
+<div class="resultValue"
+id="reactionResult">
+
+0 N
+
+</div>
+
+</div>
+
+<div class="noticeBox"
+id="reactionNotice">
+
+1人保持可能
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 放水量 -->
+
+<section id="flowPage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+放水量計算
+
+</h2>
+
+<div class="card">
+
+<label>
+
+ノズル種類
+
+</label>
+
+<select id="flowType">
+
+<option value="quadra">
+クアドラフォグノズル
+</option>
+
+<option value="pipe">
+管鎗
+</option>
+
+</select>
+
+<div class="formula studyOnly">
+
+Q = 0.2085 × D² × √P<br><br>
+
+Q ：放水量（㎥/min）<br>
+D ：ノズル口径（cm）<br>
+P ：ノズル圧力（MPa）
+
+</div>
+
+<div id="flowQuadra">
+
+<label>
+
+ノズルレンジ
+
+</label>
+
+<select id="flowQuadraSelect">
+
+<option value="0.8">
+110レンジ（0.8cm）
+</option>
+
+<option value="1.15">
+230レンジ（1.15cm）
+</option>
+
+<option value="1.44">
+360レンジ（1.44cm）
+</option>
+
+<option value="1.65">
+470レンジ（1.65cm）
+</option>
+
+</select>
+
+</div>
+
+<div id="flowPipe"
+class="hidden">
+
+<label>
+
+ノズル口径(cm)
+
+</label>
+
+<input type="number"
+step="0.01"
+id="flowPipeDiameter">
+
+</div>
+
+<label>
+
+ノズル圧力(MPa)
+
+</label>
+
+<input type="number"
+step="0.01"
+id="flowPressure">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+放水量
+</div>
+
+<div class="resultValue"
+id="flowResult">
+
+0.000 ㎥/min
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 吸水高さ -->
+
+<section id="suctionPage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+吸水高さによる吸水量計算
+
+</h2>
+
+<div class="card">
+
+<div class="formula studyOnly">
+
+h = 102 × P<br><br>
+
+h ：吸水高さ（m）<br>
+P ：連成計示度（MPa）<br><br>
+
+吸水量は、<br>
+「大阪市消防局発行 消防ポンプと水力」<br>
+P42の吸水性能曲線に基づき表示しています。
+
+</div>
+
+<label>
+
+吸管種類
+
+</label>
+
+<select id="pipeType">
+
+<option value="single">
+吸管1本
+</option>
+
+<option value="series">
+吸管2本直列
+</option>
+
+<option value="parallel">
+吸管2本並列
+</option>
+
+</select>
+
+<label>
+
+連成計示度(MPa)
+
+</label>
+
+<input type="number"
+step="0.001"
+id="vacuumInput">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+吸水高さ
+</div>
+
+<div class="resultValue"
+id="heightResult">
+
+0.0 m
+
+</div>
+
+</div>
+
+<div class="resultBox">
+
+<div class="resultTitle">
+最大吸水量
+</div>
+
+<div class="resultValue"
+id="suctionFlowResult">
+
+0 L/min
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 消火栓能力 -->
+
+<section id="hydrantPage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+消火栓能力計算
+
+</h2>
+
+<div class="card">
+
+<div class="formula studyOnly">
+
+消火栓最大吸水量（L/min）<br><br>
+
+Q = C × { P / (P − P₁) }^0.54<br><br>
+
+Q ：消火栓最大吸水量（L/min）<br>
+C ：任意の放水量（L/min）<br>
+P ：静水圧（MPa）<br>
+P₁ ：動静水圧（MPa）
+
+</div>
+
+<label>
+
+静水圧 P（MPa）
+
+</label>
+
+<input type="number"
+step="0.01"
+id="staticPressure">
+
+<label>
+
+動静水圧 P₁（MPa）
+
+</label>
+
+<input type="number"
+step="0.01"
+id="dynamicPressure">
+
+<label>
+
+任意の放水量 C（L/min）
+
+</label>
+
+<input type="number"
+step="10"
+id="baseFlow">
+
+<div class="resultBox">
+
+<div class="resultTitle">
+消火栓最大吸水量
+</div>
+
+<div class="resultValue"
+id="hydrantResult">
+
+0 L/min
+
+</div>
+
+</div>
+
+<div class="noticeBox"
+id="hydrantNotice">
+
+入力待機中
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 説明ページ -->
+
+<section id="guidePage"
+class="page">
+
+<button class="backBtn">
+
+← メニューへ戻る
+
+</button>
+
+<h2>
+
+使い方・説明
+
+</h2>
+
+<div class="card">
+
+<h3>
+📘 本ツールについて
+</h3>
+
+<p>
+
+このツールは、機関員が現場で行う計算を補助する目的で作成したものです。<br><br>
+
+そのため、あくまで補助ツールとして使用し、最終判断は現場の状況に合わせて臨機応変に行ってください。<br><br>
+
+また、和歌山市消防局の公式見解としてこのツールを運営しているのではなく、
+消防局内の有志が個人で作成したものであるということにご留意ください。<br><br>
+
+各計算式は以下に記載する書籍を基に作成しております。<br><br>
+
+改善点等あれば作成者まで気軽に連絡お願いします。
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+📚 参考文献
+</h3>
+
+<p>
+
+消防ポンプと水力<br>
+消防実務指導書<br>
+平成11年9月<br>
+大阪市消防局発行<br><br>
+
+機関員のための水力学と高度機関運用<br>
+令和6年5月<br>
+機関運用技術研究所発行
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🚒 ホース摩擦損失計算
+</h3>
+
+<p>
+
+ここに説明文を入力
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🚒 放水反動力計算
+</h3>
+
+<p>
+
+ここに説明文を入力
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🚒 放水量計算
+</h3>
+
+<p>
+
+ここに説明文を入力
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🚒 吸水高さによる吸水量計算
+</h3>
+
+<p>
+
+ここに説明文を入力
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🚒 消火栓能力計算
+</h3>
+
+<p>
+
+ここに説明文を入力
+
+</p>
+
+</div>
+
+<button id="resetBtn"
+class="resetBtn">
+
+設定リセット
+
+</button>
+
+</section>
+
+</main>
+
+<footer>
+
+<div class="footerText">
+
+本ツールは計算補助を目的としています。<br>
+最終判断は現場基準に従ってください。
+
+</div>
+
+<div class="historyBox">
+
+<h3>
+更新履歴
+</h3>
+
+<div class="historyText">
+
+Ver5 Stable<br><br>
+
+・消火栓能力計算追加<br>
+・吸水性能曲線補間対応<br>
+・反動力人数表示追加<br>
+・UI安定化<br>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js?v=2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+</body>
+
+</html>
