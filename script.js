@@ -525,9 +525,51 @@ const singleData = [
 
 ];
 
+const seriesData = [
+
+{h:0,q:1280},
+{h:1,q:1250},
+{h:2,q:1200},
+{h:3,q:1130},
+{h:4,q:1030},
+{h:5,q:700},
+{h:6,q:280},
+{h:7,q:0}
+
+];
+
+const parallelData = [
+
+{h:0,q:2630},
+{h:1,q:2620},
+{h:2,q:2580},
+{h:3,q:2480},
+{h:4,q:2350},
+{h:5,q:2140},
+{h:6,q:1810},
+{h:7,q:1330}
+
+];
+
+let selectedData;
+
+if(pipeType === "single"){
+
+selectedData = singleData;
+
+}else if(pipeType === "series"){
+
+selectedData = seriesData;
+
+}else if(pipeType === "parallel"){
+
+selectedData = parallelData;
+
+}
+
 let flow = interpolate(
 height,
-singleData
+selectedData
 );
 
 document.getElementById("suctionFlowResult")
