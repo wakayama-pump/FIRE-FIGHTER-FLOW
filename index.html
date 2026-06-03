@@ -42,7 +42,7 @@ href="./icon.png">
 -機関員専用スーパー電卓-
 
 <div class="version">
-Ver6 Stable
+Ver7 Stable
 </div>
 
 </div>
@@ -605,6 +605,35 @@ P42の吸水性能曲線に基づき表示しています。
 
 <label>
 
+計算方法
+
+</label>
+
+<div class="suctionTabs">
+
+<button
+id="vacuumTab"
+class="activeTab"
+type="button">
+
+連成計から計算
+
+</button>
+
+<button
+id="heightTab"
+type="button">
+
+吸水高さから計算
+
+</button>
+
+</div>
+
+<div id="vacuumArea">
+
+<label>
+
 連成計示度(MPa)
 
 </label>
@@ -612,6 +641,23 @@ P42の吸水性能曲線に基づき表示しています。
 <input type="number"
 step="0.001"
 id="vacuumInput">
+
+</div>
+
+<div id="heightArea"
+style="display:none;">
+
+<label>
+
+吸水高さ(m)
+
+</label>
+
+<input type="number"
+step="0.1"
+id="heightInput">
+
+</div>
 
 <div class="resultBox">
 
@@ -932,11 +978,10 @@ class="page">
 
 <div class="historyText">
 
-Ver6 Stable<br><br>
+Ver7 Stable<br><br>
 
-・吸管種別ごとの吸水性能曲線対応<br>
-・吸水量計算修正<br>
-・説明文調整<br>
+・吸水量計算に「吸水高さから計算」モード追加<br>
+・ＵＩ改善<br>
 
 </div>
 
@@ -944,7 +989,7 @@ Ver6 Stable<br><br>
 
 </footer>
 
-<script src="./script.js?v=6"></script>
+<script src="./script.js?v=7"></script>
 
 </body>
 

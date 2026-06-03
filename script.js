@@ -484,6 +484,21 @@ return 0;
 
 function calcSuction(){
 
+const mode =
+
+document.getElementById(
+"vacuumArea"
+).style.display
+!== "none"
+
+?
+
+"vacuum"
+
+:
+
+"height";
+
 const p =
 parseFloat(
 document.getElementById("vacuumInput").value
@@ -492,11 +507,24 @@ document.getElementById("vacuumInput").value
 const pipeType =
 document.getElementById("pipeType").value;
 
+let height;
+
+if(mode==="vacuum"){
+
 const rawHeight =
 102 * p;
 
-const height =
+height =
 Math.round(rawHeight * 10) / 10;
+
+}else{
+
+height =
+parseFloat(
+document.getElementById("heightInput").value
+) || 0;
+
+}
 
 document.getElementById("heightResult")
 .innerText =
@@ -580,6 +608,7 @@ flow + " L/min";
 
 [
 "vacuumInput",
+"heightInput",
 "pipeType"
 ].forEach(id=>{
 
@@ -590,6 +619,70 @@ calcSuction
 );
 
 });
+
+const vacuumTab =
+document.getElementById(
+"vacuumTab"
+);
+
+const heightTab =
+document.getElementById(
+"heightTab"
+);
+
+vacuumTab.addEventListener(
+"click",
+()=>{
+
+document.getElementById(
+"vacuumArea"
+).style.display =
+"block";
+
+document.getElementById(
+"heightArea"
+).style.display =
+"none";
+
+vacuumTab.classList.add(
+"activeTab"
+);
+
+heightTab.classList.remove(
+"activeTab"
+);
+
+calcSuction();
+
+}
+);
+
+heightTab.addEventListener(
+"click",
+()=>{
+
+document.getElementById(
+"vacuumArea"
+).style.display =
+"none";
+
+document.getElementById(
+"heightArea"
+).style.display =
+"block";
+
+heightTab.classList.add(
+"activeTab"
+);
+
+vacuumTab.classList.remove(
+"activeTab"
+);
+
+calcSuction();
+
+}
+);
 
 /* 消火栓能力 */
 

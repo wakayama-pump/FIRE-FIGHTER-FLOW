@@ -1,4 +1,4 @@
-const CACHE_NAME = "fff-cache-v6";
+const CACHE_NAME = "fff-cache-v7";
 
 const urlsToCache = [
 "./",
