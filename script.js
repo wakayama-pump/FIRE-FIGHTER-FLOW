@@ -275,18 +275,26 @@ function toggleReaction(){
 const type =
 document.getElementById("reactionType").value;
 
+document.getElementById("reactionQuadra")
+.classList.add("hidden");
+
+document.getElementById("reactionGforce")
+.classList.add("hidden");
+
+document.getElementById("reactionPipe")
+.classList.add("hidden");
+
 if(type==="quadra"){
 
 document.getElementById("reactionQuadra")
 .classList.remove("hidden");
 
-document.getElementById("reactionPipe")
-.classList.add("hidden");
+}else if(type==="gforce"){
+
+document.getElementById("reactionGforce")
+.classList.remove("hidden");
 
 }else{
-
-document.getElementById("reactionQuadra")
-.classList.add("hidden");
 
 document.getElementById("reactionPipe")
 .classList.remove("hidden");
@@ -317,6 +325,13 @@ parseFloat(
 document.getElementById("reactionQuadraSelect").value
 ) || 0;
 
+}else if(type==="gforce"){
+
+d =
+parseFloat(
+document.getElementById("reactionGforceSelect").value
+) || 0;
+
 }else{
 
 d =
@@ -338,17 +353,23 @@ document.getElementById("reactionResult")
 .innerText =
 result.toFixed(0)+" N";
 
-if(result >= 200){
+if(result <= 200){
 
 document.getElementById("reactionNotice")
 .innerText =
-"可能であれば2人保持してください";
+"1人保持可能";
+
+}else if(result < 300){
+
+document.getElementById("reactionNotice")
+.innerText =
+"2人保持推奨";
 
 }else{
 
 document.getElementById("reactionNotice")
 .innerText =
-"1人保持可能";
+"2人以上で保持してください";
 
 }
 
@@ -356,6 +377,7 @@ document.getElementById("reactionNotice")
 
 [
 "reactionQuadraSelect",
+"reactionGforceSelect",
 "reactionPipeDiameter",
 "reactionPressure"
 ].forEach(id=>{
@@ -375,18 +397,26 @@ function toggleFlow(){
 const type =
 document.getElementById("flowType").value;
 
+document.getElementById("flowQuadra")
+.classList.add("hidden");
+
+document.getElementById("flowGforce")
+.classList.add("hidden");
+
+document.getElementById("flowPipe")
+.classList.add("hidden");
+
 if(type==="quadra"){
 
 document.getElementById("flowQuadra")
 .classList.remove("hidden");
 
-document.getElementById("flowPipe")
-.classList.add("hidden");
+}else if(type==="gforce"){
+
+document.getElementById("flowGforce")
+.classList.remove("hidden");
 
 }else{
-
-document.getElementById("flowQuadra")
-.classList.add("hidden");
 
 document.getElementById("flowPipe")
 .classList.remove("hidden");
@@ -417,6 +447,13 @@ parseFloat(
 document.getElementById("flowQuadraSelect").value
 ) || 0;
 
+}else if(type==="gforce"){
+
+d =
+parseFloat(
+document.getElementById("flowGforceSelect").value
+) || 0;
+
 }else{
 
 d =
@@ -442,6 +479,7 @@ result.toFixed(3)+" ㎥/min";
 
 [
 "flowQuadraSelect",
+"flowGforceSelect",
 "flowPipeDiameter",
 "flowPressure"
 ].forEach(id=>{
@@ -744,6 +782,186 @@ document.getElementById(id)
 .addEventListener(
 "input",
 calcHydrant
+);
+
+});
+
+/* 消火薬剤運用計算 */
+
+const chemicalTab =
+document.getElementById(
+"chemicalTab"
+);
+
+const cafsTab =
+document.getElementById(
+"cafsTab"
+);
+
+function setFoamMode(mode){
+
+const ratio =
+document.getElementById(
+"foamRatio"
+);
+
+ratio.innerHTML = "";
+
+if(mode==="chemical"){
+
+ratio.innerHTML = `
+<option value="0.03">
+3%
+</option>
+
+<option value="0.06">
+6%
+</option>
+`;
+
+chemicalTab.classList.add(
+"activeTab"
+);
+
+cafsTab.classList.remove(
+"activeTab"
+);
+
+}else{
+
+for(
+let i=0.3;
+i<=1.0;
+i+=0.1
+){
+
+ratio.innerHTML += `
+<option value="${(i/100).toFixed(3)}">
+${i.toFixed(1)}%
+</option>
+`;
+
+}
+
+cafsTab.classList.add(
+"activeTab"
+);
+
+chemicalTab.classList.remove(
+"activeTab"
+);
+
+}
+
+calcFoam();
+
+}
+
+chemicalTab.addEventListener(
+"click",
+()=>setFoamMode(
+"chemical"
+)
+);
+
+cafsTab.addEventListener(
+"click",
+()=>setFoamMode(
+"cafs"
+)
+);
+
+setFoamMode(
+"chemical"
+);
+
+function calcFoam(){
+
+const remain =
+parseFloat(
+document.getElementById(
+"foamRemain"
+).value
+) || 0;
+
+const flow =
+parseFloat(
+document.getElementById(
+"foamFlow"
+).value
+) || 0;
+
+const ratio =
+parseFloat(
+document.getElementById(
+"foamRatio"
+).value
+) || 0;
+
+/* 薬剤使用量 */
+
+const use =
+flow * ratio;
+
+document.getElementById(
+"foamUse"
+).innerText =
+use.toFixed(2)
++ " L/min";
+
+/* 放射可能時間 */
+
+if(use <= 0){
+
+document.getElementById(
+"foamTime"
+).innerText =
+"0分00秒";
+
+return;
+
+}
+
+const totalSec =
+remain / use * 60;
+
+const min =
+Math.floor(
+totalSec / 60
+);
+
+const sec =
+Math.floor(
+totalSec % 60
+);
+
+document.getElementById(
+"foamTime"
+).innerText =
+
+min + "分"
++ String(sec)
+.padStart(2,"0")
++ "秒";
+
+}
+
+[
+"foamRemain",
+"foamFlow",
+"foamRatio"
+].forEach(id=>{
+
+document.getElementById(id)
+.addEventListener(
+"input",
+calcFoam
+);
+
+document.getElementById(id)
+.addEventListener(
+"change",
+calcFoam
 );
 
 });
